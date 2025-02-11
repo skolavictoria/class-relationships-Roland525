@@ -1,122 +1,23 @@
-#include <iostream>
-#include <vector>
-#include <string>
+#include "Student.h"
+#include "Professor.h"
+#include "Course.h"
+#include "Department.h"
 
 using namespace std;
-
-class Course;
-
-class Person {
-public:
-    int age;
-    string name;
-
-    void displayInfo() {
-        cout << "Name: " << name << endl;
-        cout << "Age: " << age << endl;
-    }
-};
-
-class Student : public Person {
-public:
-    int studentID;
-    vector<Course*> enrolledCourses;
-
-    void enrollCourse(Course* course) {
-        enrolledCourses.push_back(course);
-    }
-
-    void displayCourses() {
-        cout << name << " added to these courses:" << endl;
-        for (int i = 0; i < enrolledCourses.size(); i++) {
-            cout << enrolledCourses[i]->courseName << endl;
-        }
-    }
-};
-
-class Professor : public Person {
-public:
-    int employeeID;
-    vector<Course*> teachingCourses;
-
-    void assignCourse(Course* course) {
-        teachingCourses.push_back(course);
-    }
-
-    void displayAssignedCourses() {
-        cout << name << " is teaching these courses:" << endl;
-        for (int i = 0; i < teachingCourses.size(); i++) {
-            cout << teachingCourses[i]->courseName << endl;
-        }
-    }
-};
-
-class Course {
-public:
-    int courseID;
-    string courseName;
-    vector<Student*> students;
-
-    void addStudent(Student* student) {
-        students.push_back(student);
-        cout << student->name << " added to " << courseName << endl;
-    }
-
-    void displayEnrolledStudents() {
-        cout << "Students in " << courseName << ":" << endl;
-        for (int i = 0; i < students.size(); i++) {
-            cout << students[i]->name << endl;
-        }
-    }
-};
-
-class Department {
-public:
-    string departmentName;
-    vector<Professor*> professors;
-    vector<Course*> courses;
-
-    void addProfessor(Professor* professor) {
-        professors.push_back(professor);
-    }
-
-    void addCourse(Course* course) {
-        courses.push_back(course);
-    }
-
-    void displayProfessorsAndCourses() {
-        cout << "Department name: " << departmentName << endl;
-
-        cout << "Professors: " << endl;
-        for (int i = 0; i < professors.size(); i++) {
-            cout << professors[i]->name << " teaches: ";
-            for (int j = 0; j < professors[i]->teachingCourses.size(); j++) {
-                cout << professors[i]->teachingCourses[j]->courseName << " ";
-            }
-            cout << endl;
-        }
-
-        cout << "Courses: " << endl;
-        for (int i = 0; i < courses.size(); i++) {
-            cout << courses[i]->courseName << endl;
-        }
-    }
-};
 
 int main() {
     vector<Student*> students;
     vector<Professor*> professors;
     vector<Course*> courses;
-    Department department;
-    department.departmentName = "Programming Department";
+    Department department("Programming Department");
 
-    int user;
+    int user = 0;
     while (user != 10) {
-        cout << "(1) Show info" << endl << "(2) Modify info" << endl << "(10) Exit" << endl;
+        cout << "\n1 - Show info\n2 - Modify info\n10 - Exit\nChoose: ";
         cin >> user;
 
-        if (user == 1) {
-            cout << "(1) Students "<< endl << "(2) Professors" << endl << "(3) Department" << endl;
+        if (user == 1) { // Вывод информации
+            cout << "1 - Students\n2 - Professors\n3 - Department\nChoose: ";
             cin >> user;
 
             if (user == 1) { 
@@ -124,74 +25,106 @@ int main() {
                     students[i]->displayInfo();
                     students[i]->displayCourses();
                 }
-            } else if (user == 2) { 
+            } 
+            else if (user == 2) { 
                 for (int i = 0; i < professors.size(); i++) {
                     professors[i]->displayInfo();
                     professors[i]->displayAssignedCourses();
                 }
-            } else if (user == 3) { 
+            } 
+            else if (user == 3) { 
                 department.displayProfessorsAndCourses();
             }
         }
 
-        if (user == 2) {
-            cout << "1 - Add Student\n2 - Add Professor\n3 - Add Course\n4 - Enroll Student\n5 - Assign Course to Professor\n6 - Add Professor to Department\n7 - Add Course to Department\nChoose: ";
+        if (user == 2) { // Изменение данных
+            cout << "1 - Add Student\n2 - Add Professor\n3 - Add Course\n4 - Enroll Student in Course\n5 - Assign Professor to Course\nChoose: ";
             cin >> user;
 
-            if (user == 1) {
-                Student* s = new Student();
-                cout << "Enter name: ";
-                cin >> s->name;
-                cout << "Enter age: ";
-                cin >> s->age;
-                cout << "Enter ID: ";
-                cin >> s->studentID;
-                students.push_back(s);
+            if (user == 1) { // Добавить студента
+                string name;
+                int age, id;
+                cout << "Enter student name: "; cin >> name;
+                cout << "Enter age: "; cin >> age;
+                cout << "Enter student ID: "; cin >> id;
+                students.push_back(new Student(name, age, id));
             } 
-            else if (user == 2) {
-                Professor* p = new Professor();
-                cout << "Enter name: ";
-                cin >> p->name;
-                cout << "Enter age: ";
-                cin >> p->age;
-                cout << "Enter ID: ";
-                cin >> p->employeeID;
-                professors.push_back(p);
+            else if (user == 2) { // Добавить профессора
+                string name;
+                int age, id;
+                cout << "Enter professor name: "; cin >> name;
+                cout << "Enter age: "; cin >> age;
+                cout << "Enter employee ID: "; cin >> id;
+                professors.push_back(new Professor(name, age, id));
             } 
-            else if (user == 3) {
-                Course* c = new Course();
-                cout << "Enter course name: ";
-                cin >> c->courseName;
-                cout << "Enter course ID: ";
-                cin >> c->courseID;
-                courses.push_back(c);
+            else if (user == 3) { // Добавить курс
+                string courseName;
+                int courseID;
+                cout << "Enter course name: "; cin >> courseName;
+                cout << "Enter course ID: "; cin >> courseID;
+                courses.push_back(new Course(courseName, courseID));
             } 
-            else if (user == 4) {
-                cout << "Select student ID: ";
-                int studentID;
+            else if (user == 4) { // Записать студента на курс
+                cout << "Select student ID:\n";
+                for (int i = 0; i < students.size(); i++)
+                    cout << students[i]->studentID << ": " << students[i]->name << "\n";
+                int studentID, courseID;
                 cin >> studentID;
-                Student* s = NULL;
+
+                cout << "Select course ID:\n";
+                for (int i = 0; i < courses.size(); i++)
+                    cout << courses[i]->courseID << ": " << courses[i]->courseName << "\n";
+                cin >> courseID;
+
+                Student* selectedStudent = 0;
+                Course* selectedCourse = 0;
+
                 for (int i = 0; i < students.size(); i++) {
                     if (students[i]->studentID == studentID) {
-                        s = students[i];
-                        break;
+                        selectedStudent = students[i];
                     }
                 }
 
-                cout << "Select course ID: ";
-                int courseID;
-                cin >> courseID;
-                Course* c = NULL;
                 for (int i = 0; i < courses.size(); i++) {
                     if (courses[i]->courseID == courseID) {
-                        c = courses[i];
-                        break;
+                        selectedCourse = courses[i];
                     }
                 }
 
-                if (s != NULL && c != NULL) {
-                    s->enrollCourse(c);
-                    c->addStudent(s);
+                if (selectedStudent && selectedCourse) {
+                    selectedStudent->enrollCourse(selectedCourse);
+                    selectedCourse->addStudent(selectedStudent);
+                }
+            } 
+            else if (user == 5) { // Назначить курс профессору
+                cout << "Select professor ID:\n";
+                for (int i = 0; i < professors.size(); i++)
+                    cout << professors[i]->employeeID << ": " << professors[i]->name << "\n";
+                int professorID, courseID;
+                cin >> professorID;
+
+                cout << "Select course ID:\n";
+                for (int i = 0; i < courses.size(); i++)
+                    cout << courses[i]->courseID << ": " << courses[i]->courseName << "\n";
+                cin >> courseID;
+
+                Professor* selectedProfessor = 0;
+                Course* selectedCourse = 0;
+
+                for (int i = 0; i < professors.size(); i++) {
+                    if (professors[i]->employeeID == professorID) {
+                        selectedProfessor = professors[i];
+                    }
+                }
+
+                for (int i = 0; i < courses.size(); i++) {
+                    if (courses[i]->courseID == courseID) {
+                        selectedCourse = courses[i];
+                    }
+                }
+
+                if (selectedProfessor && selectedCourse) {
+                    selectedProfessor->assignCourse(selectedCourse);
                 }
             }
         }
