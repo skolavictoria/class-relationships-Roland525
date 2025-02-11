@@ -1,4 +1,3 @@
-# Makefile
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra
 
@@ -6,15 +5,18 @@ SRCS = src/main.cpp src/Person.cpp src/Student.cpp src/Professor.cpp src/Course.
 OBJS = $(SRCS:.cpp=.o)
 EXEC = bin/university_system
 
-all: $(EXEC)
+all: bin $(EXEC)
+
+bin:
+	mkdir -p bin
 
 $(EXEC): $(OBJS)
-    $(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 %.o: %.cpp
-    $(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-    rm -f $(OBJS) $(EXEC)
+	rm -f $(OBJS) $(EXEC)
 
 .PHONY: all clean
