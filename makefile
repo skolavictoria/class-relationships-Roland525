@@ -5,10 +5,7 @@ SRCS = src/main.cpp src/Person.cpp src/Student.cpp src/Professor.cpp src/Course.
 OBJS = $(SRCS:.cpp=.o)
 EXEC = bin/university_system
 
-all: bin $(EXEC)
-
-bin:
-	mkdir -p bin
+all: $(EXEC)
 
 $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^

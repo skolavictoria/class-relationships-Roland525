@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Student::Student(string name, int age, int studentID) 
+Student::Student(std::string name, int age, int studentID)
     : Person(name, age), studentID(studentID) {}
 
 void Student::enrollCourse(Course* course) {
@@ -12,8 +12,13 @@ void Student::enrollCourse(Course* course) {
 }
 
 void Student::displayCourses() {
-    cout << name << " added in:\n";
+    std::cout << "Enrolled Courses:" << std::endl;
     for (Course* course : enrolledCourses) {
-        cout << course->courseName << endl;
+        std::cout << "- " << course->courseName << std::endl;
     }
+}
+
+void Student::displayInfo() {
+    std::cout << "Student: " << name << std::endl;
+    std::cout << "Age: " << age << std::endl;
 }

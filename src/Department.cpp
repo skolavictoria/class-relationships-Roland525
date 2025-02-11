@@ -1,4 +1,5 @@
 #include "Department.h"
+#include "Student.h"
 #include <iostream>
 
 using namespace std;
@@ -15,12 +16,26 @@ void Department::addCourse(Course* course) {
 }
 
 void Department::displayProfessorsAndCourses() {
-    cout << "Department: " << departmentName << "Professors: " << endl;
+    cout << "Department: " << departmentName << endl;
+    cout << "Professors:" << endl;
+
     for (Professor* professor : professors) {
-        cout << " " << professor->name << " teaches: ";
-        for (Course* course : professor->teachingCourses) {
-            cout << course->courseName << " ";
+        cout << "- " << professor->name << endl;
+        if (!professor->teachingCourses.empty()) {
+            cout << "  Assigned Courses:" << endl;
+            for (Course* course : professor->teachingCourses) {
+                cout << "  - " << course->courseName << endl;
+            }
         }
-        cout << endl;
+    }
+
+    cout << "Courses:" << endl;
+    for (Course* course : courses) {
+        if (course->students.empty()) continue;
+        cout << "- " << course->courseName << endl;
+        cout << "  Enrolled Students:" << endl;
+        for (Student* student : course->students) {
+            cout << "  - " << student->name << endl;
+        }
     }
 }

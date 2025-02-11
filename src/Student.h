@@ -2,8 +2,8 @@
 #define STUDENT_H
 
 #include "Person.h"
-#include "Course.h"
 #include <vector>
+#include <string>
 
 class Course;
 
@@ -15,6 +15,7 @@ public:
     Student(std::string name, int age, int studentID);
     void enrollCourse(Course* course);
     void displayCourses();
+    virtual void displayInfo();
 };
 
 #endif

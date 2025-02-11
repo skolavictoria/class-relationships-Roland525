@@ -1,11 +1,9 @@
 #ifndef COURSE_H
 #define COURSE_H
 
-#include <iostream>
-#include <vector>
 #include <string>
-
-class Student;
+#include <vector>
+#include "Student.h"
 
 class Course {
 public:

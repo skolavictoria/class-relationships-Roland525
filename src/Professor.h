@@ -2,8 +2,8 @@
 #define PROFESSOR_H
 
 #include "Person.h"
-#include "Course.h"
 #include <vector>
+#include <string>
 
 class Course;
 
@@ -15,6 +15,7 @@ public:
     Professor(std::string name, int age, int employeeID);
     void assignCourse(Course* course);
     void displayAssignedCourses();
+    virtual void displayInfo();
 };
 
 #endif

@@ -1,9 +1,10 @@
 #include "Professor.h"
+#include "Course.h"
 #include <iostream>
 
 using namespace std;
 
-Professor::Professor(string name, int age, int employeeID)
+Professor::Professor(std::string name, int age, int employeeID)
     : Person(name, age), employeeID(employeeID) {}
 
 void Professor::assignCourse(Course* course) {
@@ -11,8 +12,13 @@ void Professor::assignCourse(Course* course) {
 }
 
 void Professor::displayAssignedCourses() {
-    cout << name << " teaches: ";
+    std::cout << "Assigned Courses:" << std::endl;
     for (Course* course : teachingCourses) {
-        cout << course->courseName << endl;
+        std::cout << "- " << course->courseName << std::endl;
     }
+}
+
+void Professor::displayInfo() {
+    std::cout << "Professor: " << name << std::endl;
+    std::cout << "Age: " << age << std::endl;
 }

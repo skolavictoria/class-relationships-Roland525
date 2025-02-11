@@ -1,9 +1,10 @@
 #ifndef DEPARTMENT_H
 #define DEPARTMENT_H
 
+#include <string>
+#include <vector>
 #include "Professor.h"
 #include "Course.h"
-#include <vector>
 
 class Department {
 public:
